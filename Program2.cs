@@ -1,41 +1,40 @@
-﻿
 
-var thread1 = new Thread(() => NewClass.MyThread(1, ConsoleColor.Red));
-//thread1.Start();
+var myTask = new MyClass();
 
-var thread2 = new Thread(() => NewClass.MyThread(2, ConsoleColor.Green));
-//thread2.Start();
+await Task.Run(() => myTask.MyAsync(1, ConsoleColor.Red));
 
-var thread3 = new Thread(() => NewClass.MyThread(3, ConsoleColor.Blue));
-//thread3.Start();
+await Task.Run(() => myTask.MyAsync(2, ConsoleColor.Green));
+
+await Task.Run(() => myTask.MyAsync(3, ConsoleColor.Blue));
 
 
-thread1.Start();
-//thread1.Join();
-//Thread.Sleep(50);
-thread2.Start();
-//thread2.Join();
-//Thread.Sleep(50);
-thread3.Start();
-//thread3.Join();
+//Task.Run(() => myTask.MyAsync(1, ConsoleColor.Red));
+//Task.Run(() => myTask.MyAsync(2, ConsoleColor.Green));
+//Task.Run(() => myTask.MyAsync(3, ConsoleColor.Blue));
+
+//Thread.Sleep(10000);
+//await Task.Delay(1000);
 
 
 
-public static class NewClass
+
+
+
+public class MyClass
 {
-
     private static Object myLocl = new object();
-    public static void MyThread(int threadNumber, ConsoleColor color)
+    public async Task MyAsync(int threadNumber, ConsoleColor color)
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 1; i++)
         {
-            lock (myLocl)
-            {
-                Print(threadNumber, color);
-            }
+            // lock(myLocl)
+            //  {
+            Print(threadNumber, color);
+            // }
 
         }
     }
+
 
     public static void Print(int threadNumber, ConsoleColor color)
     {
@@ -60,5 +59,6 @@ public static class NewClass
         }
         Console.WriteLine(message);
     }
+
 
 }
